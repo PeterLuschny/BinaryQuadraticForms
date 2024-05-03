@@ -1,19 +1,36 @@
-# BinaryQuadraticForms
+# Binary Quadratic Forms ...
  
-Positive Numbers represented by a Binary Quadratic Form
+Positive Numbers represented by a binary quadratic form.
 
-This SageMath notebook implements the methods for calculating the numbers represented by a binary quadratic form in a uniform and efficient way and hides the complexity of the situation by providing a simple interface to the user.
+This SageMath notebook implements methods for calculating the numbers represented by a binary quadratic form in a uniform and efficient way and hides the complexity of the situation by providing a simple interface for the user.
 
 
-The home page of the original SageMath notebook (Python2, 2014) is at the OEIS:
+The original SageMath notebook (Python2, 2014) was documented at the OEIS: [BinaryQuadraticForms-OEIS](https://oeis.org/wiki/User:Peter_Luschny/BinaryQuadraticForms)
 
-[BinaryQuadraticForms-OEIS](https://oeis.org/wiki/User:Peter_Luschny/BinaryQuadraticForms)
+The updated notebook (Python 3.10, 2024) is at the GitHub, as well as the pure Python code from the updated notebook: [BinaryQuadraticForms-GitHub](https://github.com/PeterLuschny/BinaryQuadraticForms)
 
-The updated notebook (Python 3.10, 2024) is at the GitHub, as well as the pure Python code from the updated notebook:
+A HTML version of the notebook is at: [BinaryQuadraticForms-HTML](https://luschny.de/math/seq/binaryqf/BinaryQF.html)
 
-[BinaryQuadraticForms-GitHub](https://github.com/PeterLuschny/BinaryQuadraticForms)
 
-A HTML version of the notebook is at:
+# ... at your fingertips:
 
-[BinaryQuadraticForms-HTML](https://luschny.de/math/seq/binaryqf/BinaryQF.html)
+Go to [SageMath CellServer](https://sagecell.sagemath.org/). Enter one example after the other:
 
+load('https://raw.githubusercontent.com/PeterLuschny/BinaryQuadraticForms/main/BinaryQF.py')
+
+
+// --- Example 1:
+
+Q = binaryQF([1, 0, -2])
+
+Q.represented_positives(30)
+
+
+// --- Example 2:
+
+oeis_bqf([1, 1, -1], 'primitively', terse=False) 
+
+
+// --- Example 3:
+
+oeis_bqf([1, 1, 1], 100, 'tutti')

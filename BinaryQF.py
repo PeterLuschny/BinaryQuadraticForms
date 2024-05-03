@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
 from typing import Any as Any, Generator, NoReturn as NoReturn
 from sage.calculus.var import var
 from sage.rings.integer import Integer
@@ -9,6 +6,28 @@ from sage.arith.misc import is_square, is_prime, next_prime, gcd
 from sage.misc.functional import isqrt, sqrt
 from sage.functions.other import floor, ceil
 from sage.matrix.constructor import Matrix
+
+
+# The constructor
+#
+# binaryQF([a, b, c])
+#    
+# This is the constructor of the class 'binaryQF'. 
+# a, b, c are the integer coefficients of the quadratic form
+# q(x, y) = ax^2 + bxy + cy^2. 
+#
+# The main function
+#
+# Return all numbers represented by the quadratic form subject to the
+# constraint _subset_, which is _all_, _primitively_ or _prime_ up to 
+# the bound _upto_. 
+#
+# represented_positives( 
+#    upto,    # search the range (1..upto)
+#    subset,  # 'all' or 'primitively' or 'prime', default 'all'
+#    verbose  # print messages, default True
+# )
+    
 
 class binaryQF():
     """
@@ -115,7 +134,7 @@ class binaryQF():
 
 
     def imag_all(self, 
-        M:int
+        M: int
     ) -> list[Integer]:
 
         L = [2 * ZZ(self._a), ZZ(self._b), ZZ(self._b), 2*ZZ(self._c)]
@@ -249,7 +268,7 @@ class binaryQF():
 
 
     def represented_positives(self, 
-        M: int, 
+        upto: int, 
         subset: str = "all", 
         verbose: bool = True
     ) -> list[Integer]:
@@ -274,7 +293,7 @@ class binaryQF():
 
             if prime:  # for efficiency
                 primitively = False
-            pp = self.sqr_disc(M, primitively)
+            pp = self.sqr_disc(upto, primitively)
             if prime:
                 pp = list(filter(is_prime, pp))
 
@@ -287,19 +306,19 @@ class binaryQF():
             if d < 0:
 
                 if prime:
-                    pp = R.imag_prime(M)
+                    pp = R.imag_prime(upto)
                 else:
                     if primitively:
-                        pp = R.imag_primitively(M)
+                        pp = R.imag_primitively(upto)
                     else:
-                        pp = R.imag_all(M)
+                        pp = R.imag_all(upto)
 
             # real case, indefinite form
             else: # d > 0 and not square
 
                 if prime:  # for efficiency
                     primitively = True
-                pp = R.positive_primitives(M, primitively)
+                pp = R.positive_primitives(upto, primitively)
                 if prime:
                     pp = list(filter(is_prime, pp))
                 pp = sorted(pp)
@@ -308,37 +327,65 @@ class binaryQF():
             msg0 = "primes" if prime else "positive integers"
             msg1 = "primitively" if primitively else ""
             msg2 = "represented up to"
-            print("There are", len(pp), msg0, msg1, msg2, M)
+            print("There are", len(pp), msg0, msg1, msg2, upto)
 
         return pp
 
+# The OEIS-query function</h2>
+#  
+# oeis_bqf(q, filter, upto, terse)
+# 
+# The function tries to find sequences in the OEIS whose terms are represented
+# by the binary quadratic form with coefficients $q = [a, b, c]$ and which are
+# restricted according to the _filter_, which is one of _all_, _primitively_,
+# _prime_ or _tutti_. The parameter _upto_ gives the upper bound of the search 
+# range, which is 100 by default. If _terse_ is _True_ the output will be a 
+# one-liner; otherwise the output is more verbose. With the parameter _values_ 
+# you can switch off the display of the values; it is set to _True_ by default. 
+# To use the function you have to be connected to the Internet.
 
 def oeis_bqf(
     abc: list[int], 
+    upto: int = 100,
     filter: str = 'all',
-    numreps: int = 12,
-    terse: bool = False
+    terse: bool = True,
+    values: bool = True
 ):
+    
+    if filter == 'tutti':
+        oeis_bqf([1, 1, 1], upto, 'all', terse=False) 
+        oeis_bqf([1, 1, 1], upto, 'primitively', terse=False) 
+        oeis_bqf([1, 1, 1], upto, 'prime', terse=False) 
+        return
+        
+    reps = []
+    Q = binaryQF(abc)
+    reps = Q.represented_positives(upto, filter, verbose = not terse)
 
     d = abc[1] ** 2 - 4 * abc[0] * abc[2]
-    sl = 100 if filter == 'prime' else 50
-    rep = []
-
-    # make sure that seq is long enough
-    for _ in range(3):
-        Q = binaryQF(abc)
-        rep = Q.represented_positives(sl, filter, verbose = False)
-        if len(rep) >= numreps:
-            break
-        else:
-            sl *= 10 
-
-    if rep != []:
-        values = rep[:min(len(rep), numreps)]
-        search = oeis(values, 4)
-        found = [seq.id() for seq in search] 
-        print([d], abc, filter, found) 
-        if not terse: print(values, "\n") 
-    else:
+    if reps == []:
+        print(f"No the representatives below {upto}.")
         print([d], abc, filter)
+        return
 
+    reps = reps[:min(20, upto)]
+    if values and not terse: print(reps) 
+    search = oeis(reps, 4)
+
+    found = []
+    if search != []:
+        if not terse: print(search)
+        found = [seq.id() for seq in search] 
+        if not terse: 
+            if found == []: print("No sequence found in the OEIS.")
+            else: print(found)
+        if terse: 
+            if found == []: 
+                print([d], abc, filter)
+                print("No sequence found in the OEIS.")
+            else: 
+                print([d], abc, filter, found)
+            if values: 
+                print(reps) 
+                print()
+        else: print()
