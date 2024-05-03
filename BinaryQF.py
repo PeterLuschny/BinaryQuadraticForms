@@ -3,7 +3,7 @@ from sage.calculus.var import var
 from sage.rings.integer import Integer
 from sage.rings.integer_ring import ZZ
 from sage.arith.misc import is_square, is_prime, next_prime, gcd
-from sage.misc.functional import isqrt, sqrt
+from sage.misc.functional import isqrt
 from sage.functions.other import floor, ceil
 from sage.matrix.constructor import Matrix
 
@@ -120,12 +120,13 @@ class binaryQF():
     ) -> list[Integer]:
 
         a, b, c = self._a, self._b, self._c
-        d = c - b * b / (4 * a) 
+        d = c - (b * b) / (4 * a) 
         A : list[Integer] = []
 
         for y in range(1 + isqrt(M / d)):
-            r = y * b / (2 * a)
+            r = (y * b) / (2 * a)
             s = sqrt((M - d * y * y) / a)
+            print(ceil(-s -r), 1 + floor(s - r))
             for x in range(ceil(-s -r), 1 + floor(s - r)):
                 if gcd(x, y) == 1:
                     A.append(a * x^2 + b * x * y + c * y^2) 
@@ -368,7 +369,7 @@ def oeis_bqf(
         print([d], abc, filter)
         return
 
-    reps = reps[:min(30, upto)]
+    reps = reps[0:min(30, upto)]
     if values and not terse: print(reps) 
     search = oeis(reps, 4)
 
