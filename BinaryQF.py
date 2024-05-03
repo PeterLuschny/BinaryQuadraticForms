@@ -353,9 +353,9 @@ def oeis_bqf(
 ):
     
     if filter == 'tutti':
-        oeis_bqf([1, 1, 1], upto, 'all', terse=False) 
-        oeis_bqf([1, 1, 1], upto, 'primitively', terse=False) 
-        oeis_bqf([1, 1, 1], upto, 'prime', terse=False) 
+        oeis_bqf(abc, upto, 'all', terse=False) 
+        oeis_bqf(abc, upto, 'primitively', terse=False) 
+        oeis_bqf(abc, upto, 'prime', terse=False) 
         return
         
     reps = []
@@ -368,7 +368,7 @@ def oeis_bqf(
         print([d], abc, filter)
         return
 
-    reps = reps[:min(20, upto)]
+    reps = reps[:min(30, upto)]
     if values and not terse: print(reps) 
     search = oeis(reps, 4)
 
