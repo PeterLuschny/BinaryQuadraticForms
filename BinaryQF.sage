@@ -3,7 +3,7 @@ from sage.calculus.var import var
 from sage.rings.integer import Integer
 from sage.rings.integer_ring import ZZ
 from sage.arith.misc import is_square, is_prime, next_prime, gcd
-from sage.misc.functional import isqrt
+from sage.misc.functional import isqrt, sqrt
 from sage.functions.other import floor, ceil
 from sage.matrix.constructor import Matrix
 
@@ -354,11 +354,11 @@ def oeis_bqf(
 ):
     
     if filter == 'tutti':
-        oeis_bqf(abc, upto, 'all', terse=False) 
-        oeis_bqf(abc, upto, 'primitively', terse=False) 
-        oeis_bqf(abc, upto, 'prime', terse=False) 
+        oeis_bqf(abc, upto, 'all', terse, values) 
+        oeis_bqf(abc, upto, 'primitively', terse, values) 
+        oeis_bqf(abc, upto, 'prime', terse, values) 
         return
-        
+
     reps = []
     Q = binaryQF(abc)
     reps = Q.represented_positives(upto, filter, verbose = not terse)
@@ -373,20 +373,19 @@ def oeis_bqf(
     if values and not terse: print(reps) 
     search = oeis(reps, 4)
 
-    found = []
     if search != []:
-        if not terse: print(search)
         found = [seq.id() for seq in search] 
         if not terse: 
-            if found == []: print("No sequence found in the OEIS.")
-            else: print(found)
-        if terse: 
             if found == []: 
-                print([d], abc, filter)
+                print(search)
                 print("No sequence found in the OEIS.")
             else: 
-                print([d], abc, filter, found)
+                print()
+                print(search)
+                print(found)
+            print()
+        else: 
+            print([d], abc, filter, found)
             if values: 
                 print(reps) 
                 print()
-        else: print()
