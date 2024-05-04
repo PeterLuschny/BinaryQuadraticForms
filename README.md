@@ -31,3 +31,8 @@ Go to [SageMath CellServer](https://sagecell.sagemath.org/) and enter:
 #### Example 3:
 
     oeis_bqf([1, 1, 1], 100, 'tutti')
+
+
+#### Example 4: (shows the use on OEIS)
+
+    oeis_bqf([1, 13, -9], 1000, 'tutti')
