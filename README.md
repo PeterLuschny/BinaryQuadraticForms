@@ -1,6 +1,6 @@
 # Binary Quadratic Forms ...
  
-Positive Numbers represented by a binary quadratic form.
+Positive numbers represented by a binary quadratic form.
 
 This SageMath notebook implements methods for calculating the numbers represented by a binary quadratic form in a uniform and efficient way and hides the complexity of the situation by providing a simple interface for the user.
 

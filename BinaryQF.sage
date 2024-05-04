@@ -126,7 +126,6 @@ class binaryQF():
         for y in range(1 + isqrt(M / d)):
             r = (y * b) / (2 * a)
             s = sqrt((M - d * y * y) / a)
-            print(ceil(-s -r), 1 + floor(s - r))
             for x in range(ceil(-s -r), 1 + floor(s - r)):
                 if gcd(x, y) == 1:
                     A.append(a * x^2 + b * x * y + c * y^2) 
