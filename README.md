@@ -6,7 +6,7 @@ This SageMath notebook implements methods for calculating the numbers represente
 
 
 * The original SageMath notebook (Python2, 2014) was documented at OEIS: [BinaryQuadraticForms-OEIS](https://oeis.org/wiki/User:Peter_Luschny/BinaryQuadraticForms)
-* The updated notebook (Python 3.10, 2024) is at GitHub, as well as the pure Python code from the updated notebook: [BinaryQuadraticForms-GitHub](https://github.com/PeterLuschny/BinaryQuadraticForms)
+* The updated notebook (Python 3.10, 2024) is at GitHub, as well as the pure Sage code from the updated notebook: [BinaryQuadraticForms-GitHub](https://github.com/PeterLuschny/BinaryQuadraticForms)
 * A HTML version of the notebook can be found at: [BinaryQuadraticForms-HTML](https://luschny.de/math/seq/binaryqf/BinaryQF.html)
 
 
@@ -20,7 +20,7 @@ Go to [SageMath CellServer](https://sagecell.sagemath.org/) and enter:
 #### Example 1:
 
     Q = binaryQF([1, 0, -2])
-    Q.represented_positives(30)
+    Q.represented_positives(100, 'prime')
 
 
 #### Example 2:
