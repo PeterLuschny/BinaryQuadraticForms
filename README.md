@@ -16,7 +16,7 @@ A HTML version of the notebook can be found at: [BinaryQuadraticForms-HTML](http
 
 Go to [SageMath CellServer](https://sagecell.sagemath.org/). Enter one example after the other:
 
-load('https://raw.githubusercontent.com/PeterLuschny/BinaryQuadraticForms/main/BinaryQF.py')
+load('https://raw.githubusercontent.com/PeterLuschny/BinaryQuadraticForms/main/BinaryQF.sage')
 
 
 // --- Example 1:
